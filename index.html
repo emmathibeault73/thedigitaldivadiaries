@@ -97,7 +97,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .pi-swipe { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; }
 .post-img.fit { padding: 0; display: block; }
 .post-img.fit::before { display: none; }
-.flatlay { display: block; width: 100%; height: 100%; }
+.fit-photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
 .fit-tag { position: absolute; left: 12px; bottom: 12px; }
 .post-meta { padding: 12px 6px 4px; font-size: .85rem; }
 .post-meta strong { font-weight: 600; }
@@ -281,66 +281,10 @@ input, select, textarea { border-radius: 2px; }
       <div class="phone" aria-label="Example Instagram post we might create for a client">
         <div class="post-head"><div class="avatar"><span></span></div><div><strong>your.brand</strong><br><span style="color:var(--muted)">Managed by The Digital Diva Diaries</span></div></div>
         <div class="post-img fit">
-          <svg class="flatlay" viewBox="0 0 400 500" role="img" aria-label="Illustrated outfit flat lay: cream knit top, brown mini skirt, espresso shoulder bag, sunglasses, ballet flats and an iced matcha latte">
-            <rect width="400" height="500" fill="#ece2d2"/>
-            <rect x="0" y="0" width="400" height="500" fill="url(#linen)" opacity=".5"/>
-            <defs>
-              <pattern id="linen" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 3h6M3 0v6" stroke="#dccfba" stroke-width=".6"/></pattern>
-              <linearGradient id="matcha" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4efe2"/><stop offset=".45" stop-color="#e7ecd6"/><stop offset=".62" stop-color="#a9bf7a"/><stop offset="1" stop-color="#7f9d4f"/></linearGradient>
-            </defs>
-            <!-- knit top -->
-            <g transform="translate(40 40) rotate(-6 80 70)">
-              <path d="M40 10 Q80 28 120 10 L160 30 L148 70 L130 62 L132 140 L28 140 L30 62 L12 70 L0 30 Z" fill="#f7f1e6" stroke="#d9cbb4" stroke-width="1.5"/>
-              <path d="M40 10 Q80 28 120 10" fill="none" stroke="#d9cbb4" stroke-width="3"/>
-              <path d="M50 40v95M65 40v95M80 42v93M95 40v95M110 40v95" stroke="#e6dac6" stroke-width="2"/>
-            </g>
-            <!-- mini skirt -->
-            <g transform="translate(52 205) rotate(4 70 70)">
-              <path d="M28 0 H122 L148 132 H2 Z" fill="#6b4630"/>
-              <rect x="26" y="0" width="98" height="14" fill="#55361f"/>
-              <path d="M75 14 V132" stroke="#55361f" stroke-width="1.5"/>
-              <circle cx="75" cy="7" r="3" fill="#c9a97a"/>
-            </g>
-            <!-- ballet flats -->
-            <g transform="translate(60 382)">
-              <ellipse cx="28" cy="40" rx="24" ry="44" fill="#2a1a12" transform="rotate(-12 28 40)"/>
-              <ellipse cx="30" cy="52" rx="14" ry="24" fill="#ece2d2" transform="rotate(-12 28 40)"/>
-              <ellipse cx="86" cy="40" rx="24" ry="44" fill="#2a1a12" transform="rotate(10 86 40)"/>
-              <ellipse cx="86" cy="52" rx="14" ry="24" fill="#ece2d2" transform="rotate(10 86 40)"/>
-              <path d="M18 18 q10 6 20 0M76 18 q10 6 20 0" stroke="#c9a97a" stroke-width="2" fill="none"/>
-            </g>
-            <!-- shoulder bag -->
-            <g transform="translate(232 60) rotate(8 60 60)">
-              <path d="M20 40 Q60 -30 100 40" fill="none" stroke="#3a2418" stroke-width="6"/>
-              <rect x="0" y="38" width="120" height="78" rx="38" fill="#3a2418"/>
-              <path d="M6 64 Q60 86 114 64" fill="none" stroke="#2a1a12" stroke-width="2"/>
-              <rect x="52" y="68" width="16" height="10" rx="2" fill="#c9a97a"/>
-            </g>
-            <!-- sunglasses -->
-            <g transform="translate(232 200) rotate(-10 60 20)">
-              <ellipse cx="26" cy="20" rx="24" ry="18" fill="#2a1a12"/>
-              <ellipse cx="86" cy="20" rx="24" ry="18" fill="#2a1a12"/>
-              <path d="M50 16 q6 -6 12 0" stroke="#2a1a12" stroke-width="4" fill="none"/>
-              <ellipse cx="18" cy="14" rx="7" ry="4" fill="#5a4434"/>
-              <ellipse cx="78" cy="14" rx="7" ry="4" fill="#5a4434"/>
-            </g>
-            <!-- iced matcha latte -->
-            <g transform="translate(250 262)">
-              <ellipse cx="60" cy="200" rx="56" ry="10" fill="#d6c7ae"/>
-              <path d="M18 30 L30 196 Q60 206 90 196 L102 30 Z" fill="url(#matcha)" stroke="#cfc4ad" stroke-width="2"/>
-              <rect x="36" y="58" width="22" height="20" rx="4" fill="#ffffff" opacity=".55" transform="rotate(-12 47 68)"/>
-              <rect x="62" y="72" width="20" height="18" rx="4" fill="#ffffff" opacity=".5" transform="rotate(10 72 81)"/>
-              <rect x="44" y="96" width="20" height="18" rx="4" fill="#ffffff" opacity=".45" transform="rotate(6 54 105)"/>
-              <ellipse cx="60" cy="30" rx="44" ry="9" fill="#f4efe2" stroke="#cfc4ad" stroke-width="2"/>
-              <path d="M74 30 L92 -28" stroke="#a67c52" stroke-width="8" stroke-linecap="round"/>
-              <path d="M26 50 L30 170" stroke="#ffffff" stroke-width="4" opacity=".5" stroke-linecap="round"/>
-            </g>
-            <!-- little sparkle -->
-            <path d="M196 168 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4z" fill="#c9a97a"/>
-          </svg>
+          <img class="fit-photo" src="sample-post.jpg" alt="Outfit photo: dark straight-leg jeans, brown pointed flats, a brown leather jacket, gold cuffs and an iced latte">
           <span class="tag fit-tag">Fit check · Reel</span>
         </div>
-        <div class="post-meta"><strong>your.brand</strong> Today's fit, brought to you by an iced matcha and zero plans 🍵✨ Tap to shop the look.
+        <div class="post-meta"><strong>your.brand</strong> Today's fit, brought to you by an iced latte and zero plans ☕✨ Tap to shop the look.
           <div class="post-stats"><span>♥ 12,481</span><span>💬 386</span><span>↗ 1,204 shares</span></div>
         </div>
       </div>
