@@ -95,6 +95,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .pi-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(42,26,18,.25); }
 .pi-dots i:first-child { background: #2a1a12; }
 .pi-swipe { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; }
+.post-img.fit { padding: 0; display: block; }
+.post-img.fit::before { display: none; }
+.fit-photo { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+.fit-tag { position: absolute; left: 12px; bottom: 12px; }
 .post-meta { padding: 12px 6px 4px; font-size: .85rem; }
 .post-meta strong { font-weight: 600; }
 .post-stats { display: flex; gap: 14px; color: var(--muted); font-size: .8rem; margin-top: 4px; font-variant-numeric: tabular-nums; }
@@ -276,12 +280,11 @@ input, select, textarea { border-radius: 2px; }
       </div>
       <div class="phone" aria-label="Example Instagram post we might create for a client">
         <div class="post-head"><div class="avatar"><span></span></div><div><strong>your.brand</strong><br><span style="color:var(--muted)">Managed by The Digital Diva Diaries</span></div></div>
-        <div class="post-img">
-          <div class="pi-top"><span>The new era</span><span>01 / 05</span></div>
-          <p class="pi-quote">Your brand, but make it <em>iconic.</em></p>
-          <div class="pi-bottom"><span class="tag">Carousel</span><span class="pi-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="pi-swipe">Swipe →</span></div>
+        <div class="post-img fit">
+          <img class="fit-photo" src="sample-post.jpg" alt="Outfit photo: dark straight-leg jeans, brown pointed flats, a brown leather jacket, gold cuffs and an iced latte">
+          <span class="tag fit-tag">Fit check · Reel</span>
         </div>
-        <div class="post-meta"><strong>your.brand</strong> New look, same us, just more iconic ✨ Swipe to see what's coming this season.
+        <div class="post-meta"><strong>your.brand</strong> Today's fit, brought to you by an iced latte and zero plans ☕✨ Tap to shop the look.
           <div class="post-stats"><span>♥ 12,481</span><span>💬 386</span><span>↗ 1,204 shares</span></div>
         </div>
       </div>
