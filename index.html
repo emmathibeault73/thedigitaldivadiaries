@@ -165,6 +165,50 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 /* about */
 .about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(32px, 6vw, 72px); align-items: center; }
 .about-grid > * { min-width: 0; }
+/* Texture: fixed film grain over everything, never blocks clicks */
+.grain { position: fixed; inset: -50%; z-index: 40; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.2s steps(4) infinite; }
+@keyframes grain { 0% { transform: translate(0,0); } 25% { transform: translate(-3%,2%); } 50% { transform: translate(2%,-3%); } 75% { transform: translate(-2%,-1%); } 100% { transform: translate(0,0); } }
+
+/* Caramel line details */
+.eyebrow { display: inline-flex; align-items: center; gap: 12px; }
+.eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--matcha); flex: none; }
+header.top { border-bottom-color: color-mix(in srgb, var(--matcha) 45%, var(--line)); }
+.hero h1 em { position: relative; white-space: nowrap; }
+.hero h1 em::after { content: ""; position: absolute; left: 2%; right: 4%; bottom: .02em; height: .06em; min-height: 2px; background: var(--matcha); transform-origin: left; animation: underline 1.1s .7s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes underline { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.phone { outline: 1px solid color-mix(in srgb, var(--matcha) 55%, transparent); outline-offset: 10px; }
+.viral { outline: 1px solid color-mix(in srgb, var(--matcha) 55%, transparent); outline-offset: 10px; }
+section + section, .ribbon + section { border-top: 1px solid color-mix(in srgb, var(--matcha) 18%, transparent); }
+.serve article, .day { border-top: 2px solid var(--matcha); }
+.sp-name::after { content: " ✦"; font-style: normal; font-size: .5em; color: var(--matcha); vertical-align: middle; }
+
+/* Motion: hero entrance, hover zooms and lifts */
+.hero .dear, .hero h1, .hero .lede, .hero .ctas, .hero .phone { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
+.hero h1 { animation-delay: .1s; }
+.hero .lede { animation-delay: .25s; }
+.hero .ctas { animation-delay: .35s; }
+.hero .phone { animation-delay: .3s; }
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.post-img, .v-photo { overflow: hidden; }
+.fit-photo, .v-photo img { transition: transform .8s cubic-bezier(.2,.7,.2,1); }
+.phone:hover .fit-photo, .viral:hover .v-photo img { transform: scale(1.05); }
+.serve article, .tier, .day { transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s, border-color .4s; }
+.serve article:hover, .tier:hover, .day:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+.specialties li { transition: transform .4s cubic-bezier(.2,.7,.2,1); }
+.specialties li:hover { transform: translateX(6px); }
+
+/* Scroll reveal: only armed by script, so the page is complete without it */
+.js-reveal .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0s); }
+.js-reveal .reveal.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { animation: none; }
+  .hero .dear, .hero h1, .hero .lede, .hero .ctas, .hero .phone, .hero h1 em::after { animation: none; }
+  .fit-photo, .v-photo img, .serve article, .tier, .day, .specialties li { transition: none; transform: none !important; }
+}
+
 /* Phone-only floating call button (the nav links are hidden on small screens) */
 .fab-call { display: none; position: fixed; z-index: 30; right: max(16px, calc(env(safe-area-inset-right, 0px) + 12px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); background: var(--rose); color: var(--paper); border: 1px solid var(--rose); padding: .85em 1.2em; border-radius: 999px; font: 500 .74rem var(--body); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; box-shadow: 0 10px 30px -10px rgba(0,0,0,.7); align-items: center; gap: 8px; }
 .fab-call svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
@@ -520,6 +564,7 @@ input, select, textarea { border-radius: 2px; }
   </section>
 </main>
 
+<div class="grain" aria-hidden="true"></div>
 <a class="fab-call" href="tel:+16313595192" aria-label="Call our virtual diva at +1 (631) 359-5192"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z"/></svg>Call the diva</a>
 
 <footer>
@@ -538,6 +583,27 @@ input, select, textarea { border-radius: 2px; }
     if (!likes || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let n = 184203;
     setInterval(() => { n += Math.floor(Math.random() * 40) + 5; likes.textContent = n.toLocaleString('en-US'); }, 1100);
+  })();
+  // Scroll reveal: items already on screen stay visible; the rest fade up as they scroll in.
+  (function () {
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const groups = ['.head', '.serve article', '.specialties', '.tier', '.addons', '.day', '.week-note', '.viral', '.about-grid > div:last-child', '.call-card', '.contact-grid > div', '#lead-form'];
+    const items = [];
+    groups.forEach(sel => document.querySelectorAll(sel).forEach((el, i) => {
+      if (el.getBoundingClientRect().top < innerHeight * .9) return;
+      el.classList.add('reveal'); el.style.setProperty('--d', (i % 4) * 0.08 + 's'); items.push(el);
+    }));
+    document.documentElement.classList.add('js-reveal');
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); }
+    }), { rootMargin: '0px 0px -8% 0px' });
+    items.forEach(el => io.observe(el));
+    // Once shown, drop the reveal classes so hover lifts work normally.
+    function reveal(el) {
+      el.classList.add('in');
+      setTimeout(() => { el.classList.remove('reveal', 'in'); el.style.removeProperty('--d'); }, 1300);
+    }
+    setTimeout(() => items.forEach(reveal), 6000);
   })();
   const copyBtn = document.getElementById('copy-num');
   copyBtn.addEventListener('click', () => {
