@@ -172,7 +172,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 @keyframes heartpop { 0% { transform: translate(-50%, -50%) scale(0) rotate(var(--tilt)); opacity: 0; } 15% { transform: translate(-50%, -50%) scale(1.25) rotate(var(--tilt)); opacity: 1; } 30% { transform: translate(-50%, -50%) scale(.95) rotate(var(--tilt)); } 45% { transform: translate(-50%, -50%) scale(1.05) rotate(var(--tilt)); opacity: 1; } 100% { transform: translate(-50%, -110%) scale(1) rotate(var(--tilt)); opacity: 0; } }
 .like-stat { display: inline-flex; align-items: center; gap: 4px; }
 .heart-ic { font-weight: 400; font-size: 1.1em; transition: color .2s; }
-.like-stat.is-liked { color: #e0574f; }
+.like-stat.is-liked { color: #c9a14a; }
 .like-stat.bump .heart-ic { animation: bump .35s ease; }
 @keyframes bump { 50% { transform: scale(1.45); } }
 .tap-hint { margin-left: auto; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--matcha); }
@@ -277,10 +277,10 @@ section + section, .ribbon + section { border-top: 1px solid color-mix(in srgb, 
 .viral figcaption { padding: 6px 4px 4px; font-size: .9rem; color: var(--muted); }
 .viral figcaption b { color: var(--ink); font-weight: 500; }
 .hearts { position: absolute; right: 26px; bottom: 120px; width: 40px; height: 220px; pointer-events: none; z-index: 3; }
-.hearts span { position: absolute; bottom: 0; left: 50%; color: #e0574f; font-size: 1.3rem; opacity: 0; animation: floatup 3.2s ease-out infinite; }
-.hearts span:nth-child(2) { animation-delay: .8s; font-size: 1rem; color: var(--rose); }
-.hearts span:nth-child(3) { animation-delay: 1.6s; font-size: 1.5rem; }
-.hearts span:nth-child(4) { animation-delay: 2.4s; font-size: .9rem; color: var(--rose); }
+.hearts span { position: absolute; bottom: 0; left: 50%; color: #c9a14a; font-size: 1.3rem; opacity: 0; animation: floatup 3.2s ease-out infinite; }
+.hearts span:nth-child(2) { animation-delay: .8s; font-size: 1rem; color: #ece3d5; }
+.hearts span:nth-child(3) { animation-delay: 1.6s; font-size: 1.5rem; color: #8a5a3a; }
+.hearts span:nth-child(4) { animation-delay: 2.4s; font-size: .9rem; color: #e3c27a; }
 @keyframes floatup { 0% { transform: translate(-50%, 0) scale(.6); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(calc(-50% + 18px), -200px) scale(1.1); opacity: 0; } }
 @keyframes pulse { 50% { opacity: .3; } }
 @media (prefers-reduced-motion: reduce) { .hearts { display: none; } .v-badge i { animation: none; } }
@@ -593,6 +593,7 @@ input, select, textarea { border-radius: 2px; }
     document.getElementById('f-pkg').value = a.dataset.pkg;
   }));
   // Tap-to-like on both sample posts: a heart pops where you tap and the count goes up.
+  const HEART_COLORS = ['#6b4630', '#3a2418', '#c9a14a', '#e3c27a', '#ece3d5', '#d6c2a4'];
   function bumpLikes(el, by) {
     const n = (+el.dataset.n || 0) + by;
     el.dataset.n = n;
@@ -616,6 +617,8 @@ input, select, textarea { border-radius: 2px; }
       pop.style.left = (x == null ? r.width / 2 : x - r.left) + 'px';
       pop.style.top = (y == null ? r.height / 2 : y - r.top) + 'px';
       pop.style.setProperty('--tilt', (Math.random() * 30 - 15) + 'deg');
+      pop.style.color = HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)];
+      pop.style.fontSize = (56 + Math.random() * 56) + 'px';
       photo.appendChild(pop);
       pop.addEventListener('animationend', () => pop.remove());
       setTimeout(() => pop.remove(), 1200);
