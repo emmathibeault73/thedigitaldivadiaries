@@ -165,6 +165,27 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 /* about */
 .about-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(32px, 6vw, 72px); align-items: center; }
 .about-grid > * { min-width: 0; }
+/* Virtual diva call band */
+.call { padding-block: clamp(48px, 7vw, 80px) 0; }
+.call-card { background: var(--ink); color: var(--bg); border-radius: 4px; padding: clamp(28px, 5vw, 48px); display: grid; grid-template-columns: auto 1fr auto; gap: clamp(20px, 4vw, 40px); align-items: center; position: relative; overflow: hidden; }
+.call-card > * { min-width: 0; }
+.call-card .eyebrow { color: #a67c52; }
+.call-card h2 { color: var(--bg); font-size: clamp(1.8rem, 3.6vw, 2.6rem); margin-top: 10px; }
+.call-card p { color: #5a4434; margin-top: 12px; max-width: 46ch; font-size: .98rem; }
+.call-ring { width: 84px; height: 84px; border-radius: 50%; border: 1px solid #a67c52; display: grid; place-items: center; position: relative; }
+.call-ring::before, .call-ring::after { content: ""; position: absolute; inset: -1px; border-radius: 50%; border: 1px solid #a67c52; animation: ring 2.4s ease-out infinite; }
+.call-ring::after { animation-delay: 1.2s; }
+.call-ring svg { width: 34px; height: 34px; fill: none; stroke: #2a1a12; stroke-width: 1.5; stroke-linejoin: round; }
+@keyframes ring { 0% { transform: scale(1); opacity: .8; } 100% { transform: scale(1.6); opacity: 0; } }
+.call-action { display: grid; gap: 14px; justify-items: start; }
+.call-number { font-family: var(--display); font-size: clamp(1.6rem, 3vw, 2.2rem); color: var(--bg); text-decoration: none; white-space: nowrap; font-variant-numeric: tabular-nums; user-select: all; }
+.call-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.call-card .btn { background: var(--bg); color: var(--ink); border-color: var(--bg); }
+.call-card .btn.ghost { background: transparent; color: var(--bg); border-color: var(--bg); }
+.call-card .btn:hover { background: #a67c52; border-color: #a67c52; color: var(--paper); }
+@media (max-width: 900px) { .call-card { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .call-ring::before, .call-ring::after { animation: none; } }
+
 /* Specialties band under the services cards */
 .specialties { margin-top: 48px; border-top: 1px solid var(--line); padding-top: 36px; display: grid; grid-template-columns: .8fr 2fr; gap: 32px; align-items: start; }
 .specialties > * { min-width: 0; }
@@ -261,6 +282,7 @@ input, select, textarea { border-radius: 2px; }
       <li><a href="#packages">Packages</a></li>
       <li><a href="#week">A week with us</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="#call">Call the diva</a></li>
     </ul>
     <a class="btn" href="#contact">Book a call</a>
   </div>
@@ -436,6 +458,26 @@ input, select, textarea { border-radius: 2px; }
     </div>
   </section>
 
+  <section class="call" id="call">
+    <div class="wrap">
+      <div class="call-card">
+        <div class="call-ring" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z"/></svg></div>
+        <div class="call-text">
+          <span class="eyebrow">Meet our virtual diva</span>
+          <h2>Call to talk to our virtual diva</h2>
+          <p>Have a question about packages, pricing or what we can do for your brand? Give our virtual diva a ring any time. She'll chat with you, answer questions and help you get started.</p>
+        </div>
+        <div class="call-action">
+          <a class="call-number" href="tel:+16313595192">+1 (631) 359-5192</a>
+          <div class="call-btns">
+            <a class="btn" href="tel:+16313595192">Call the diva</a>
+            <button class="btn ghost" type="button" id="copy-num">Copy number</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="contact" id="contact">
     <div class="wrap contact-grid">
       <div>
@@ -443,6 +485,7 @@ input, select, textarea { border-radius: 2px; }
         <h2 style="margin-top:14px">Tell me about your brand</h2>
         <p class="lede">Fill this out and I'll reply within two business days with a few ideas for your feed.</p>
         <dl>
+          <div><dt>Virtual diva hotline</dt><dd>+1 (631) 359-5192</dd></div>
           <div><dt>Email</dt><dd>hello@digitaldivadiaries.com</dd></div>
           <div><dt>Instagram</dt><dd>@digitaldivadiaries</dd></div>
         </dl>
@@ -489,6 +532,14 @@ input, select, textarea { border-radius: 2px; }
     let n = 184203;
     setInterval(() => { n += Math.floor(Math.random() * 40) + 5; likes.textContent = n.toLocaleString('en-US'); }, 1100);
   })();
+  const copyBtn = document.getElementById('copy-num');
+  copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText('+1 (631) 359-5192').then(() => { copyBtn.textContent = 'Copied'; }, () => {
+      const r = document.createRange(); r.selectNodeContents(document.querySelector('.call-number'));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r); copyBtn.textContent = 'Number selected';
+    });
+    setTimeout(() => { copyBtn.textContent = 'Copy number'; }, 2000);
+  });
   const form = document.getElementById('lead-form');
   // Inquiries are saved to the Digital Diva Diaries Supabase project (visitors can add a lead, never read one).
   const SUPABASE_URL = 'https://vbfbgaqgvwuohkwvlqwx.supabase.co';
