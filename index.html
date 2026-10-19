@@ -10,7 +10,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Outfit:wght@300;400;500;600&family=Caveat:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap">
 <style>
 /* Layout: a diary-page hero with a phone "post" beside it, then stacked bands: clients, packages, process, about, contact. */
 :root {
@@ -25,9 +25,9 @@
   --line: #3a2a1f;
   --shadow: 0 24px 50px -28px rgba(0, 0, 0, .8);
   color-scheme: dark;
-  --display: "Bodoni Moda", "Didot", "Times New Roman", serif;
-  --body: "Outfit", "Helvetica Neue", Arial, sans-serif;
-  --hand: "Caveat", "Segoe Print", cursive;
+  --display: "Cormorant Garamond", "Garamond", "Times New Roman", serif;
+  --body: "Jost", "Futura", "Helvetica Neue", Arial, sans-serif;
+  --hand: "Pinyon Script", "Snell Roundhand", cursive;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -318,7 +318,33 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 @media (max-width: 520px) { .row { grid-template-columns: 1fr; } .tier.star { margin-top: 10px; } }
 
 /* Sophisticated finish: refined script, squared edges, quiet uppercase buttons */
-.hand { font-family: var(--display); font-style: italic; font-size: 1.25rem; letter-spacing: .01em; color: var(--matcha); }
+.hand { font-family: var(--display); font-style: italic; font-size: 1.35rem; letter-spacing: .01em; color: var(--matcha); }
+/* Fancy script only for short flourishes, never running text */
+.dear, .sign { font-family: var(--hand); font-style: normal; letter-spacing: 0; }
+.dear { font-size: clamp(1.6rem, 3vw, 2rem); }
+.sign { font-size: 2.6rem; }
+h1, h2, h3 { font-weight: 500; letter-spacing: -.005em; }
+.hero h1 { font-weight: 500; font-size: clamp(3rem, 8vw, 6.2rem); line-height: 1; }
+h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+.price, .call-number { font-weight: 600; }
+/* Editorial body copy: paragraphs and lists set in the serif, larger and warmer; labels, buttons and forms stay in the sans */
+main p, .tier li, .viral figcaption, .post-meta { font-family: var(--display); font-weight: 500; font-size: 1.16rem; line-height: 1.5; letter-spacing: .005em; }
+main p { color: color-mix(in srgb, var(--ink) 82%, var(--muted)); }
+.hero .lede { font-style: italic; font-size: clamp(1.3rem, 2.2vw, 1.55rem); line-height: 1.4; color: var(--ink); }
+.head p, .about .body p, .contact .lede, .call-card p { font-size: 1.22rem; }
+.call-card p { color: #4a3426; }
+.serve p:not(.ideas), .sp-intro p, .week-note, .addons { font-style: italic; }
+.serve article p:not(.ideas) { font-size: 1.18rem; line-height: 1.45; color: color-mix(in srgb, var(--ink) 85%, var(--muted)); }
+.specialties .sp-intro p { font-size: 1.15rem; }
+.serve article .ideas { font-size: 1.05rem; }
+.serve .ideas, .day p, .post-meta, .viral figcaption { font-size: 1.05rem; }
+.serve .ideas b, .post-meta strong, .viral figcaption b { font-family: var(--body); font-size: .8rem; font-weight: 500; letter-spacing: .06em; }
+.tier li { font-size: 1.1rem; }
+.tier.star li, .tier.star .muted { color: #4a3426; }
+.sp-desc { font-family: var(--display); font-style: italic; font-size: 1.08rem; }
+.about .body p:first-child::first-letter { font-size: 3.4em; float: left; line-height: .85; padding: .06em .1em 0 0; color: var(--matcha); font-weight: 500; }
+#f-error { font-family: var(--display); }
+.post-stats, .v-stats, .tap-hint { font-family: var(--body); }
 .sign { font-size: 1.8rem; }
 .dear { transform: none; }
 .btn { border-radius: 2px; text-transform: uppercase; letter-spacing: .16em; font-size: .78rem; padding: 1.1em 1.9em; }
