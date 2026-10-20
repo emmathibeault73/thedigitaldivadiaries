@@ -422,6 +422,23 @@ input, select, textarea { border-radius: 2px; }
 .faq details[open] summary::after { transform: rotate(45deg); }
 .faq summary:hover { color: var(--rose); }
 .faq details p { padding: 0 4px 22px; max-width: 64ch; color: var(--muted); font-style: italic; font-size: 1.15rem; line-height: 1.5; }
+
+/* The Feed: Instagram-style grid */
+.feed-card { max-width: 860px; margin: 0 auto; background: var(--paper); border: 1px solid var(--line); border-top: 2px solid var(--matcha); border-radius: 4px; padding: 18px; }
+.feed-top { display: flex; align-items: center; gap: 14px; padding: 4px 4px 18px; }
+.feed-top .avatar { flex: none; }
+.feed-id { display: grid; gap: 2px; min-width: 0; }
+.feed-id strong { font-family: var(--body); font-weight: 500; font-size: .95rem; color: var(--ink); overflow: hidden; text-overflow: ellipsis; }
+.feed-id span { font-family: var(--display); font-style: italic; color: var(--muted); font-size: 1rem; }
+.feed-follow { margin-left: auto; padding: .8em 1.4em; font-size: .7rem; }
+.feed-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.feed-tile { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; background: var(--rose-soft); }
+.feed-tile img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.feed-hover { position: absolute; inset: 0; display: grid; place-items: center; font-size: 1.8rem; color: var(--rose); background: color-mix(in srgb, var(--bg) 45%, transparent); opacity: 0; transition: opacity .3s ease; }
+.feed-tile:hover img, .feed-tile:focus-visible img { transform: scale(1.05); }
+.feed-tile:hover .feed-hover, .feed-tile:focus-visible .feed-hover { opacity: 1; }
+@media (max-width: 520px) { .feed-card { padding: 12px; } .feed-grid { gap: 3px; } .feed-follow { padding: .7em 1em; } }
+@media (prefers-reduced-motion: reduce) { .feed-tile img { transition: none; } .feed-tile:hover img { transform: none; } }
 </style>
 
 <div class="intro" aria-hidden="true"><div class="intro-inner"><span class="intro-small">Welcome to</span><span class="intro-name">The Digital Diva Diaries</span><span class="intro-line"></span></div></div>
@@ -581,6 +598,31 @@ input, select, textarea { border-radius: 2px; }
         <div class="day"><span class="d">Sun</span><span class="f m">Photo</span><p>Styled flat lay and a thank-you to the community</p></div>
       </div>
       <p class="week-note">Every week we watch what performed and tweak the next one.</p>
+    </div>
+  </section>
+
+  <section class="feed" id="feed">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">The feed</span>
+        <h2>Content with a point of view</h2>
+        <p>A peek at the kind of content I create: warm, styled and made to stop the scroll.</p>
+      </div>
+      <div class="feed-card">
+        <div class="feed-top">
+          <div class="avatar"><span></span></div>
+          <div class="feed-id"><strong>digitaldivadiariessocial</strong><span>The Digital Diva Diaries</span></div>
+          <a class="btn feed-follow" href="https://www.instagram.com/digitaldivadiariessocial/" target="_blank" rel="noopener">Follow</a>
+        </div>
+        <div class="feed-grid">
+        <a class="feed-tile" href="https://www.instagram.com/digitaldivadiariessocial/" target="_blank" rel="noopener"><img src="feed-1.jpg" alt="Outfit check: olive knit top, jeans and an iced latte" loading="lazy" width="864" height="1080"><span class="feed-hover" aria-hidden="true">♥</span></a>
+        <a class="feed-tile" href="https://www.instagram.com/digitaldivadiariessocial/" target="_blank" rel="noopener"><img src="feed-2.jpg" alt="Pilates mat, ball and weights flat lay" loading="lazy" width="864" height="1080"><span class="feed-hover" aria-hidden="true">♥</span></a>
+        <a class="feed-tile" href="https://www.instagram.com/digitaldivadiariessocial/" target="_blank" rel="noopener"><img src="feed-3.jpg" alt="Two friends with coffees outside a green cafe" loading="lazy" width="864" height="1080"><span class="feed-hover" aria-hidden="true">♥</span></a>
+        <a class="feed-tile" href="https://www.instagram.com/digitaldivadiariessocial/" target="_blank" rel="noopener"><img src="feed-4.jpg" alt="A green matcha drink by candlelight with flowers" loading="lazy" width="864" height="1080"><span class="feed-hover" aria-hidden="true">♥</span></a>
+        <a class="feed-tile" href="https://www.instagram.com/digitaldivadiariessocial/" target="_blank" rel="noopener"><img src="feed-5.jpg" alt="Selfie in a burgundy NY cap and grey sweatshirt" loading="lazy" width="864" height="1080"><span class="feed-hover" aria-hidden="true">♥</span></a>
+        <a class="feed-tile" href="https://www.instagram.com/digitaldivadiariessocial/" target="_blank" rel="noopener"><img src="feed-6.jpg" alt="Stacks of coffee cups under a landscape painting" loading="lazy" width="864" height="1080"><span class="feed-hover" aria-hidden="true">♥</span></a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -750,7 +792,7 @@ input, select, textarea { border-radius: 2px; }
   // Scroll reveal: items already on screen stay visible; the rest fade up as they scroll in.
   (function () {
     if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const groups = ['.head', '.serve article', '.specialties', '.tier', '.addons', '.day', '.week-note', '.viral', '.about-grid > div:last-child', '.call-card', '.faq details', '.contact-grid > div', '#lead-form'];
+    const groups = ['.head', '.serve article', '.specialties', '.tier', '.addons', '.day', '.week-note', '.feed-card', '.viral', '.about-grid > div:last-child', '.call-card', '.faq details', '.contact-grid > div', '#lead-form'];
     const items = [];
     groups.forEach(sel => document.querySelectorAll(sel).forEach((el, i) => {
       if (el.getBoundingClientRect().top < innerHeight * .9) return;
