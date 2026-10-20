@@ -361,6 +361,20 @@ main p { color: color-mix(in srgb, var(--ink) 82%, var(--muted)); }
 .eyebrow { color: var(--matcha); letter-spacing: .24em; }
 .price { color: var(--ink); }
 input, select, textarea { border-radius: 2px; }
+
+/* Week as an even planner: one row per day, matching heights */
+.week { display: grid; grid-template-columns: 1fr; gap: 0; max-width: 860px; margin: 0 auto; background: var(--paper); border: 1px solid var(--line); border-top: 2px solid var(--matcha); border-radius: 4px; }
+.week .day { display: grid; grid-template-columns: 110px 130px 1fr; align-items: center; gap: 18px; min-height: 76px; padding: 14px 28px; background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none; }
+.week .day:last-child { border-bottom: 0; }
+.week .day:hover { transform: none; box-shadow: none; background: color-mix(in srgb, var(--matcha) 8%, transparent); }
+.week .day .d { font-family: var(--display); font-style: italic; text-transform: none; letter-spacing: 0; font-size: 1.5rem; color: var(--rose); font-weight: 400; }
+.week .day .f { justify-self: start; }
+.week .day p { margin: 0; }
+.week-note { text-align: center; }
+@media (max-width: 640px) {
+  .week .day { grid-template-columns: auto 1fr; gap: 6px 14px; padding: 16px 18px; }
+  .week .day p { grid-column: 1 / -1; }
+}
 </style>
 
 <header class="top">
