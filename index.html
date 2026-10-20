@@ -459,6 +459,29 @@ html { scroll-padding-top: 84px; }
 }
 @media (max-width: 520px) { .nav .btn { display: none; } }
 @media (min-width: 1101px) { .menu-panel { display: none !important; } }
+
+/* Pages: one shows at a time once the script runs (all show without it) */
+.page[hidden] { display: none !important; }
+.js-pages .page { min-height: calc(100vh - 180px); animation: page-in .5s cubic-bezier(.2,.7,.2,1); }
+@keyframes page-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .js-pages .page { animation: none; } }
+.nav ul a[aria-current="page"], .menu-panel a[aria-current="page"] { color: var(--rose); }
+.nav ul a[aria-current="page"] { text-decoration: underline; text-decoration-color: var(--matcha); text-underline-offset: 6px; }
+
+/* Landing page: links to each page */
+.explore-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.explore-card { position: relative; display: block; aspect-ratio: 3 / 4; overflow: hidden; border: 1px solid var(--line); border-radius: 4px; text-decoration: none; background: var(--paper); }
+.explore-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+.explore-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, color-mix(in srgb, var(--bg) 92%, transparent) 0%, color-mix(in srgb, var(--bg) 35%, transparent) 55%, transparent 100%); }
+.explore-text { position: absolute; z-index: 1; left: 0; right: 0; bottom: 0; padding: 18px; display: grid; gap: 4px; }
+.explore-text b { font-family: var(--display); font-weight: 500; font-size: 1.6rem; color: var(--ink); }
+.explore-text span { font-family: var(--display); font-style: italic; color: var(--muted); font-size: 1.02rem; line-height: 1.3; }
+.explore-text i { font-style: normal; color: var(--matcha); font-size: 1.2rem; transition: transform .3s ease; }
+.explore-card:hover img, .explore-card:focus-visible img { transform: scale(1.06); }
+.explore-card:hover i, .explore-card:focus-visible i { transform: translateX(6px); }
+@media (max-width: 1000px) { .explore-grid { grid-template-columns: repeat(2, 1fr); } .explore-card:last-child { grid-column: 1 / -1; aspect-ratio: 16 / 9; } }
+@media (max-width: 520px) { .explore-text { padding: 14px; } .explore-text b { font-size: 1.3rem; } .explore-text span { font-size: .95rem; } }
+@media (prefers-reduced-motion: reduce) { .explore-card img, .explore-text i { transition: none; } }
 </style>
 
 <div class="intro" aria-hidden="true"><div class="intro-inner"><span class="intro-small">Welcome to</span><span class="intro-name">The Digital Diva Diaries</span><span class="intro-line"></span></div></div>
@@ -468,23 +491,21 @@ html { scroll-padding-top: 84px; }
     <ul>
       <li><a href="#serve">Services</a></li>
       <li><a href="#packages">Packages</a></li>
-      <li><a href="#week">A week with us</a></li>
       <li><a href="#feed">The feed</a></li>
       <li><a href="#about">About</a></li>
-      <li><a href="#call">Call the diva</a></li>
       <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-panel"><span class="menu-lines" aria-hidden="true"><i></i><i></i></span>Menu</button>
     <a class="btn" href="#contact">Book a call</a>
   </div>
   <nav class="menu-panel" id="menu-panel" hidden aria-label="Site sections">
     <ul>
+    <li><a href="#top">Home</a></li>
     <li><a href="#serve">Services</a></li>
     <li><a href="#packages">Packages</a></li>
-    <li><a href="#week">A week with us</a></li>
     <li><a href="#feed">The feed</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#call">Call the diva</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#contact">Contact</a></li>
     </ul>
@@ -492,6 +513,7 @@ html { scroll-padding-top: 84px; }
 </header>
 
 <main id="top">
+<div class="page" data-page="home">
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
@@ -523,6 +545,24 @@ html { scroll-padding-top: 84px; }
     </div>
   </div>
 
+  <section class="explore" id="explore">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Explore the diary</span>
+        <h2>Where to next?</h2>
+      </div>
+      <div class="explore-grid">
+        <a class="explore-card" href="#serve"><img src="feed-2.jpg" alt="" loading="lazy"><span class="explore-text"><b>Services</b><span>What I do, my specialties and a week of posts</span><i aria-hidden="true">→</i></span></a>
+        <a class="explore-card" href="#packages"><img src="feed-6.jpg" alt="" loading="lazy"><span class="explore-text"><b>Packages</b><span>Plans, add-ons and FAQ</span><i aria-hidden="true">→</i></span></a>
+        <a class="explore-card" href="#feed"><img src="feed-1.jpg" alt="" loading="lazy"><span class="explore-text"><b>The feed</b><span>A peek at the content I create</span><i aria-hidden="true">→</i></span></a>
+        <a class="explore-card" href="#about"><img src="emma.jpg" alt="" loading="lazy"><span class="explore-text"><b>About</b><span>Meet your digital diva</span><i aria-hidden="true">→</i></span></a>
+        <a class="explore-card" href="#contact"><img src="feed-5.jpg" alt="" loading="lazy"><span class="explore-text"><b>Contact</b><span>Call the diva or send me a note</span><i aria-hidden="true">→</i></span></a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="page" data-page="services">
   <section id="serve">
     <div class="wrap">
       <div class="head">
@@ -564,6 +604,28 @@ html { scroll-padding-top: 84px; }
     </div>
   </section>
 
+  <section id="week">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">A week in the diary</span>
+        <h2>What a week of posts looks like</h2>
+        <p>Here is a sample Signature week for a brand launching a new product.</p>
+      </div>
+      <div class="week">
+        <div class="day"><span class="d">Mon</span><span class="f">Reel</span><p>Teaser: "something new is coming" with a close-up reveal</p></div>
+        <div class="day"><span class="d">Tue</span><span class="f m">Carousel</span><p>"3 reasons you'll love it" product breakdown</p></div>
+        <div class="day"><span class="d">Wed</span><span class="f">Stories</span><p>Poll: which color should we drop first?</p></div>
+        <div class="day"><span class="d">Thu</span><span class="f m">Collab</span><p>Creator collab: a favorite local influencer tries it first</p></div>
+        <div class="day"><span class="d">Fri</span><span class="f">Reel</span><p>Launch day Reel with a trending sound</p></div>
+        <div class="day"><span class="d">Sat</span><span class="f">Stories</span><p>Behind the scenes and customer shoutouts</p></div>
+        <div class="day"><span class="d">Sun</span><span class="f m">Photo</span><p>Styled flat lay and a thank-you to the community</p></div>
+      </div>
+      <p class="week-note">Every week we watch what performed and tweak the next one.</p>
+    </div>
+  </section>
+</div>
+
+<div class="page" data-page="packages">
   <section class="packages" id="packages">
     <div class="wrap">
       <div class="head">
@@ -616,26 +678,26 @@ html { scroll-padding-top: 84px; }
     </div>
   </section>
 
-  <section id="week">
+
+  <section class="faq" id="faq">
     <div class="wrap">
       <div class="head">
-        <span class="eyebrow">A week in the diary</span>
-        <h2>What a week of posts looks like</h2>
-        <p>Here is a sample Signature week for a brand launching a new product.</p>
+        <span class="eyebrow">Dear diary, I have questions</span>
+        <h2>Frequently asked</h2>
       </div>
-      <div class="week">
-        <div class="day"><span class="d">Mon</span><span class="f">Reel</span><p>Teaser: "something new is coming" with a close-up reveal</p></div>
-        <div class="day"><span class="d">Tue</span><span class="f m">Carousel</span><p>"3 reasons you'll love it" product breakdown</p></div>
-        <div class="day"><span class="d">Wed</span><span class="f">Stories</span><p>Poll: which color should we drop first?</p></div>
-        <div class="day"><span class="d">Thu</span><span class="f m">Collab</span><p>Creator collab: a favorite local influencer tries it first</p></div>
-        <div class="day"><span class="d">Fri</span><span class="f">Reel</span><p>Launch day Reel with a trending sound</p></div>
-        <div class="day"><span class="d">Sat</span><span class="f">Stories</span><p>Behind the scenes and customer shoutouts</p></div>
-        <div class="day"><span class="d">Sun</span><span class="f m">Photo</span><p>Styled flat lay and a thank-you to the community</p></div>
+      <div class="faq-list">
+        <details><summary>Do I have to sign a long contract?</summary><p>Nope. Every package is month to month, with no long contracts.</p></details>
+        <details><summary>Do you only work with coffee, fitness and clothing brands?</summary><p>Not at all. Those are my specialties, but I work with brands of every kind.</p></details>
+        <details><summary>Which platforms do you manage?</summary><p>Instagram and TikTok to start. The Debut covers one platform, The Signature covers two, and Main Character covers up to three.</p></details>
+        <details><summary>Do you take the photos and videos?</summary><p>Yes. The Signature includes one on-site content shoot a month, and Main Character includes two. I also create Reels, graphics and captions in your brand's voice.</p></details>
+        <details><summary>Can you promise I'll go viral?</summary><p>No one honestly can. What I promise is a clear plan, content you're proud of, consistent posting and a monthly report so you can see what's working.</p></details>
+        <details><summary>How do we get started?</summary><p>Fill out the form below or call our virtual diva. I'll reply within two business days with a few ideas for your feed.</p></details>
       </div>
-      <p class="week-note">Every week we watch what performed and tweak the next one.</p>
     </div>
   </section>
+</div>
 
+<div class="page" data-page="feed">
   <section class="feed" id="feed">
     <div class="wrap">
       <div class="head">
@@ -661,6 +723,9 @@ html { scroll-padding-top: 84px; }
     </div>
   </section>
 
+</div>
+
+<div class="page" data-page="about">
   <section class="about" id="about">
     <div class="wrap about-grid">
       <figure class="viral">
@@ -691,42 +756,10 @@ html { scroll-padding-top: 84px; }
     </div>
   </section>
 
-  <section class="call" id="call">
-    <div class="wrap">
-      <div class="call-card">
-        <div class="call-ring" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z"/></svg></div>
-        <div class="call-text">
-          <span class="eyebrow">Meet our virtual diva</span>
-          <h2>Call to talk to our virtual diva</h2>
-          <p>Have a question about packages, pricing or what we can do for your brand? Give our virtual diva a ring any time. She'll chat with you, answer questions and help you get started.</p>
-        </div>
-        <div class="call-action">
-          <a class="call-number" href="tel:+16313595192">+1 (631) 359-5192</a>
-          <div class="call-btns">
-            <a class="btn" href="tel:+16313595192">Call the diva</a>
-            <button class="btn ghost" type="button" id="copy-num">Copy number</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+</div>
 
-  <section class="faq" id="faq">
-    <div class="wrap">
-      <div class="head">
-        <span class="eyebrow">Dear diary, I have questions</span>
-        <h2>Frequently asked</h2>
-      </div>
-      <div class="faq-list">
-        <details><summary>Do I have to sign a long contract?</summary><p>Nope. Every package is month to month, with no long contracts.</p></details>
-        <details><summary>Do you only work with coffee, fitness and clothing brands?</summary><p>Not at all. Those are my specialties, but I work with brands of every kind.</p></details>
-        <details><summary>Which platforms do you manage?</summary><p>Instagram and TikTok to start. The Debut covers one platform, The Signature covers two, and Main Character covers up to three.</p></details>
-        <details><summary>Do you take the photos and videos?</summary><p>Yes. The Signature includes one on-site content shoot a month, and Main Character includes two. I also create Reels, graphics and captions in your brand's voice.</p></details>
-        <details><summary>Can you promise I'll go viral?</summary><p>No one honestly can. What I promise is a clear plan, content you're proud of, consistent posting and a monthly report so you can see what's working.</p></details>
-        <details><summary>How do we get started?</summary><p>Fill out the form below or call our virtual diva. I'll reply within two business days with a few ideas for your feed.</p></details>
-      </div>
-    </div>
-  </section>
+<div class="page" data-page="contact">
+
 
   <section class="contact" id="contact">
     <div class="wrap contact-grid">
@@ -763,6 +796,27 @@ html { scroll-padding-top: 84px; }
       </form>
     </div>
   </section>
+
+  <section class="call" id="call">
+    <div class="wrap">
+      <div class="call-card">
+        <div class="call-ring" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.6 3.5h3l1.5 4-2 1.3a11 11 0 0 0 6.1 6.1l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z"/></svg></div>
+        <div class="call-text">
+          <span class="eyebrow">Meet our virtual diva</span>
+          <h2>Call to talk to our virtual diva</h2>
+          <p>Have a question about packages, pricing or what we can do for your brand? Give our virtual diva a ring any time. She'll chat with you, answer questions and help you get started.</p>
+        </div>
+        <div class="call-action">
+          <a class="call-number" href="tel:+16313595192">+1 (631) 359-5192</a>
+          <div class="call-btns">
+            <a class="btn" href="tel:+16313595192">Call the diva</a>
+            <button class="btn ghost" type="button" id="copy-num">Copy number</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
 </main>
 
 <div class="grain" aria-hidden="true"></div>
@@ -921,6 +975,45 @@ html { scroll-padding-top: 84px; }
     btn.addEventListener('click', function () { set(panel.hidden); });
     panel.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+  })();
+
+  // Pages: show the page that holds the linked section, so the site reads as separate pages.
+  (function () {
+    var pages = [].slice.call(document.querySelectorAll('.page'));
+    if (!pages.length) return;
+    document.documentElement.classList.add('js-pages');
+    var home = pages[0];
+    function route(scroll) {
+      var id = decodeURIComponent(location.hash.slice(1)) || 'top';
+      var el = id === 'top' ? null : document.getElementById(id);
+      var page = (el && el.closest('.page')) || home;
+      pages.forEach(function (p) { p.hidden = p !== page; });
+      var name = page.dataset.page;
+      var navLinks = [].slice.call(document.querySelectorAll('.nav ul a, .menu-panel a'));
+      var onPage = navLinks.filter(function (a) {
+        var t = a.getAttribute('href').slice(1);
+        var target = t === 'top' ? home : document.getElementById(t);
+        return target && (target === home ? home : target.closest('.page')) === page;
+      });
+      var exact = onPage.filter(function (a) { return a.getAttribute('href').slice(1) === id; });
+      var current = exact.length ? exact : onPage.filter(function (a) {
+        var t = a.getAttribute('href').slice(1);
+        return t === 'top' || document.getElementById(t) === page.querySelector('section');
+      });
+      navLinks.forEach(function (a) {
+        if (current.indexOf(a) > -1) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+      });
+      if (scroll === false) return;
+      var first = page.querySelector('section');
+      if (!el || el === first || el === page) window.scrollTo(0, 0);
+      else el.scrollIntoView();
+    }
+    window.addEventListener('hashchange', function () { route(); });
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href^="#"]');
+      if (a && a.getAttribute('href') === location.hash) { e.preventDefault(); route(); }
+    });
+    route(!!location.hash);
   })();
 </script>
 
