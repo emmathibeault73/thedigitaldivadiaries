@@ -391,8 +391,40 @@ input, select, textarea { border-radius: 2px; }
 .about-icons li:nth-child(even) { animation: bob 3.2s ease-in-out -1.6s infinite; }
 @keyframes bob { 50% { transform: translateY(-4px); } }
 @media (prefers-reduced-motion: reduce) { .about-icons li { animation: none; } }
+
+/* Intro screen (pure CSS so it always clears, even without JS) */
+.intro { position: fixed; inset: 0; z-index: 100; background: var(--bg); display: grid; place-items: center; animation: intro-out .7s 1.7s ease forwards; }
+.intro-inner { display: grid; justify-items: center; gap: 10px; padding: 0 16px; text-align: center; }
+.intro-small { font-family: var(--body); font-size: .7rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted); opacity: 0; animation: intro-in .8s .1s ease forwards; }
+.intro-name { font-family: var(--display); font-style: italic; font-size: clamp(2.2rem, 7vw, 4.4rem); line-height: 1.05;
+  background: linear-gradient(100deg, var(--rose) 0%, var(--rose) 40%, #f4e6cf 50%, var(--rose) 60%, var(--rose) 100%); background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent; opacity: 0; animation: intro-in .9s .25s ease forwards, shimmer 1.6s .5s ease forwards; }
+.intro-line { width: 0; height: 1px; background: var(--matcha); animation: intro-line 1s .6s cubic-bezier(.2,.7,.2,1) forwards; }
+@keyframes intro-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: 0 0; } }
+@keyframes intro-line { to { width: 120px; } }
+@keyframes intro-out { to { opacity: 0; visibility: hidden; } }
+.intro.seen { display: none; }
+@media (prefers-reduced-motion: reduce) { .intro { display: none; } }
+
+/* Rotating word in the hero heading */
+.hero h1 .rot { display: inline-block; font-style: italic; color: var(--rose); }
+.hero h1 .rot-word { display: inline-block; transition: opacity .35s ease, transform .35s ease; }
+.hero h1 .rot-word.out { opacity: 0; transform: translateY(-.25em); }
+.hero h1 .rot-word.in { opacity: 0; transform: translateY(.25em); transition: none; }
+
+/* FAQ */
+.faq-list { max-width: 860px; margin: 0 auto; border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 22px 4px; font-family: var(--display); font-size: clamp(1.2rem, 2.4vw, 1.5rem); color: var(--ink); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--body); font-weight: 300; font-size: 1.6rem; color: var(--matcha); transition: transform .3s ease; flex: none; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq summary:hover { color: var(--rose); }
+.faq details p { padding: 0 4px 22px; max-width: 64ch; color: var(--muted); font-style: italic; font-size: 1.15rem; line-height: 1.5; }
 </style>
 
+<div class="intro" aria-hidden="true"><div class="intro-inner"><span class="intro-small">Welcome to</span><span class="intro-name">The Digital Diva Diaries</span><span class="intro-line"></span></div></div>
 <header class="top">
   <div class="wrap nav">
     <a class="logo" href="#top">The Digital <b>Diva</b> Diaries</a>
@@ -412,7 +444,7 @@ input, select, textarea { border-radius: 2px; }
     <div class="wrap hero-grid">
       <div>
         <span class="hand dear">Dear diary, today we went viral…</span>
-        <h1>Social media for brands that are a little bit <em>extra.</em></h1>
+        <h1>Social media for <span class="rot" aria-live="off"><span class="rot-word">brands</span></span> that are a little bit <em>extra.</em></h1>
         <p class="lede">We plan, shoot, post and grow your brand's social media, so you can get back to running your business.</p>
         <div class="ctas">
           <a class="btn" href="#contact">Start your diary</a>
@@ -602,6 +634,23 @@ input, select, textarea { border-radius: 2px; }
     </div>
   </section>
 
+  <section class="faq" id="faq">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Dear diary, I have questions</span>
+        <h2>Frequently asked</h2>
+      </div>
+      <div class="faq-list">
+        <details><summary>Do I have to sign a long contract?</summary><p>Nope. Every package is month to month, with no long contracts.</p></details>
+        <details><summary>Do you only work with coffee, fitness and clothing brands?</summary><p>Not at all. Those are my specialties, but I work with brands of every kind.</p></details>
+        <details><summary>Which platforms do you manage?</summary><p>Instagram and TikTok to start. The Debut covers one platform, The Signature covers two, and Main Character covers up to three.</p></details>
+        <details><summary>Do you take the photos and videos?</summary><p>Yes. The Signature includes one on-site content shoot a month, and Main Character includes two. I also create Reels, graphics and captions in your brand's voice.</p></details>
+        <details><summary>Can you promise I'll go viral?</summary><p>No one honestly can. What I promise is a clear plan, content you're proud of, consistent posting and a monthly report so you can see what's working.</p></details>
+        <details><summary>How do we get started?</summary><p>Fill out the form below or call our virtual diva. I'll reply within two business days with a few ideas for your feed.</p></details>
+      </div>
+    </div>
+  </section>
+
   <section class="contact" id="contact">
     <div class="wrap contact-grid">
       <div>
@@ -701,7 +750,7 @@ input, select, textarea { border-radius: 2px; }
   // Scroll reveal: items already on screen stay visible; the rest fade up as they scroll in.
   (function () {
     if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const groups = ['.head', '.serve article', '.specialties', '.tier', '.addons', '.day', '.week-note', '.viral', '.about-grid > div:last-child', '.call-card', '.contact-grid > div', '#lead-form'];
+    const groups = ['.head', '.serve article', '.specialties', '.tier', '.addons', '.day', '.week-note', '.viral', '.about-grid > div:last-child', '.call-card', '.faq details', '.contact-grid > div', '#lead-form'];
     const items = [];
     groups.forEach(sel => document.querySelectorAll(sel).forEach((el, i) => {
       if (el.getBoundingClientRect().top < innerHeight * .9) return;
@@ -759,6 +808,33 @@ input, select, textarea { border-radius: 2px; }
       err.hidden = false;
     }
   });
+
+  // Intro screen: show once per visit
+  (function () {
+    var intro = document.querySelector('.intro');
+    if (!intro) return;
+    var seen = false;
+    try { seen = sessionStorage.getItem('dd-intro') === '1'; sessionStorage.setItem('dd-intro', '1'); } catch (e) {}
+    if (seen) intro.classList.add('seen');
+    else setTimeout(function () { intro.classList.add('seen'); }, 2600);
+  })();
+
+  // Rotating word in the hero heading
+  (function () {
+    var el = document.querySelector('.hero .rot-word');
+    if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var words = ['brands', 'coffee shops', 'Pilates studios', 'boutiques', 'clothing brands'], i = 0;
+    setInterval(function () {
+      el.classList.add('out');
+      setTimeout(function () {
+        i = (i + 1) % words.length;
+        el.textContent = words[i];
+        el.classList.remove('out'); el.classList.add('in');
+        void el.offsetWidth;
+        el.classList.remove('in');
+      }, 350);
+    }, 2600);
+  })();
 </script>
 
 </body>
