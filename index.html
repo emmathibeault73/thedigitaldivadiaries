@@ -375,6 +375,10 @@ input, select, textarea { border-radius: 2px; }
   .week .day { grid-template-columns: auto 1fr; gap: 6px 14px; padding: 16px 18px; }
   .week .day p { grid-column: 1 / -1; }
 }
+
+/* About: little fact tags */
+.about-facts { list-style: none; padding: 0; margin: 22px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.about-facts li { font-family: var(--body); font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--rose); border: 1px solid var(--line); background: var(--paper); padding: 6px 12px; border-radius: 2px; }
 </style>
 
 <header class="top">
@@ -553,9 +557,17 @@ input, select, textarea { border-radius: 2px; }
         <span class="eyebrow">About</span>
         <h2 style="margin-top:14px">Hi divas, I'm Emma.</h2>
         <div class="body">
-          <p>I started The Digital Diva Diaries because so many brands I love had amazing personalities in real life and almost none of it online.</p>
-          <p>I treat every brand's feed like a diary: honest, personal, a little dramatic, and posted consistently. You bring the product and the personality. I bring the plan, the content and the follow-through.</p>
+          <p>I was born and raised on Long Island. I spent my summers out east in the Hamptons and Montauk, and I was always hopping on the LIRR into the city. Then I headed south to Florida Atlantic University in Boca Raton.</p>
+          <p>I've loved content for as long as I can remember. I've had Instagram since basically the day it came out, and I've vlogged pretty much everything I do. I had a squishy review channel, a slime review channel, you name it.</p>
+          <p>The Digital Diva Diaries is where that lifelong love of content gets to help other people. I treat every brand's feed like a diary: honest, personal, a little dramatic, and posted consistently. You bring the product and the personality, and I bring the plan, the content and the follow-through.</p>
         </div>
+        <ul class="about-facts" aria-label="A few things about Emma">
+          <li>Long Island born and raised</li>
+          <li>Summers in the Hamptons and Montauk</li>
+          <li>LIRR regular</li>
+          <li>FAU, Boca Raton</li>
+          <li>Ex slime reviewer</li>
+        </ul>
         <p class="hand sign">xo, Emma</p>
       </div>
     </div>
