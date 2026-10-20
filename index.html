@@ -439,6 +439,26 @@ input, select, textarea { border-radius: 2px; }
 .feed-tile:hover .feed-hover, .feed-tile:focus-visible .feed-hover { opacity: 1; }
 @media (max-width: 520px) { .feed-card { padding: 12px; } .feed-grid { gap: 3px; } .feed-follow { padding: .7em 1em; } }
 @media (prefers-reduced-motion: reduce) { .feed-tile img { transition: none; } .feed-tile:hover img { transform: none; } }
+
+html { scroll-padding-top: 84px; }
+/* Navigation: full menu on wide screens, tap-to-open menu on smaller ones */
+.nav ul { gap: 22px; font-size: .9rem; }
+.menu-btn { display: none; align-items: center; gap: 10px; background: none; border: 1px solid var(--line); color: var(--ink); font-family: var(--body); font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; padding: .75em 1em; border-radius: 2px; cursor: pointer; }
+.menu-lines { display: grid; gap: 4px; width: 16px; }
+.menu-lines i { display: block; height: 1px; background: var(--rose); transition: transform .3s ease; }
+.menu-btn[aria-expanded="true"] .menu-lines i:first-child { transform: translateY(2.5px) rotate(45deg); }
+.menu-btn[aria-expanded="true"] .menu-lines i:last-child { transform: translateY(-2.5px) rotate(-45deg); }
+.menu-panel { border-top: 1px solid var(--line); background: var(--bg); }
+.menu-panel ul { list-style: none; margin: 0 auto; padding: 8px 16px 18px; max-width: 1180px; display: grid; }
+.menu-panel a { display: block; padding: 14px 4px; border-bottom: 1px solid var(--line); text-decoration: none; font-family: var(--display); font-size: 1.35rem; color: var(--ink); }
+.menu-panel li:last-child a { border-bottom: 0; }
+.menu-panel a:hover { color: var(--rose); }
+@media (max-width: 1100px) {
+  .nav ul { display: none; }
+  .menu-btn { display: inline-flex; margin-left: auto; }
+}
+@media (max-width: 520px) { .nav .btn { display: none; } }
+@media (min-width: 1101px) { .menu-panel { display: none !important; } }
 </style>
 
 <div class="intro" aria-hidden="true"><div class="intro-inner"><span class="intro-small">Welcome to</span><span class="intro-name">The Digital Diva Diaries</span><span class="intro-line"></span></div></div>
@@ -449,11 +469,26 @@ input, select, textarea { border-radius: 2px; }
       <li><a href="#serve">Services</a></li>
       <li><a href="#packages">Packages</a></li>
       <li><a href="#week">A week with us</a></li>
+      <li><a href="#feed">The feed</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#call">Call the diva</a></li>
+      <li><a href="#faq">FAQ</a></li>
     </ul>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu-panel"><span class="menu-lines" aria-hidden="true"><i></i><i></i></span>Menu</button>
     <a class="btn" href="#contact">Book a call</a>
   </div>
+  <nav class="menu-panel" id="menu-panel" hidden aria-label="Site sections">
+    <ul>
+    <li><a href="#serve">Services</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#week">A week with us</a></li>
+    <li><a href="#feed">The feed</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#call">Call the diva</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 </header>
 
 <main id="top">
@@ -876,6 +911,16 @@ input, select, textarea { border-radius: 2px; }
         el.classList.remove('in');
       }, 350);
     }, 2600);
+  })();
+
+  // Tap-to-open menu for smaller screens
+  (function () {
+    var btn = document.querySelector('.menu-btn'), panel = document.getElementById('menu-panel');
+    if (!btn || !panel) return;
+    function set(open) { btn.setAttribute('aria-expanded', open ? 'true' : 'false'); panel.hidden = !open; }
+    btn.addEventListener('click', function () { set(panel.hidden); });
+    panel.addEventListener('click', function (e) { if (e.target.closest('a')) set(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
   })();
 </script>
 
